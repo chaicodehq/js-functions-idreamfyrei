@@ -54,20 +54,58 @@
  */
 export function repeatChar(char, n) {
   // Your code here
+  if(typeof char !== 'string' || char === "") return "";
+
+  if(n <= 0) return "";
+
+  return char + repeatChar(char, n - 1);
 }
 
 export function sumNestedArray(arr) {
   // Your code here
+  if(!Array.isArray(arr)) return 0;
+  if(arr.length === 0) return 0;
+
+  if(typeof arr[0] === 'number'){
+    return arr[0] + sumNestedArray(arr.slice(1));
+}
+
+  return sumNestedArray(arr[0]) + sumNestedArray(arr.slice(1));
 }
 
 export function flattenArray(arr) {
   // Your code here
+  if(!Array.isArray(arr)) return [];
+  const result = [];
+
+  arr.forEach(item => {
+    if(!Array.isArray(item)){
+      result.push(item);
+    } else {
+      result.push(...flattenArray(item));
+    }
+  })
+  
+  return result;
 }
 
 export function isPalindrome(str) {
   // Your code here
+  if(typeof str !== 'string') return false;
+  if(str.length <= 1 )return true;
+  if(str[0].toLowerCase() !== str[str.length-1].toLowerCase()){
+    return false;
+  }
+  return isPalindrome(str.slice(1,str.length-1));
 }
 
 export function generatePattern(n) {
   // Your code here
+  if(n <= 0 || !Number.isInteger(n)) return [];
+
+  const prev = generatePattern(n-1);
+
+  const centerIndex = Math.floor(prev.length/2);
+
+  return [...prev.slice(0, centerIndex + 1), "*".repeat(n) ,...prev.slice(centerIndex)];
 }
